@@ -123,3 +123,39 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsI
 
 ### Listar serviços por área
 GET http://localhost:3000/servicos?area_id=1
+
+
+### Criar agendamento
+POST http://localhost:3000/agendamentos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+{
+  "profissional_id": 1,
+  "servico_id": 1,
+  "data_hora_inicio": "2026-07-15T10:00:00"
+}
+
+###
+
+### Listar agendamentos
+GET http://localhost:3000/agendamentos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+###
+
+### Listar agendamentos por profissional
+GET http://localhost:3000/agendamentos?profissional_id=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+###
+
+### Cancelar agendamento
+PATCH http://localhost:3000/agendamentos/1/cancelar
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+###
+
+### Concluir agendamento (admin)
+PATCH http://localhost:3000/agendamentos/1/concluir
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
