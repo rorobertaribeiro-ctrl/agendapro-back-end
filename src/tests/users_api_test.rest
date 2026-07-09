@@ -1,0 +1,86 @@
+### Cadastrar usuário cliente
+POST http://localhost:3000/usuarios/cadastro
+Content-Type: application/json
+
+{
+  "nome": "Ana Paula",
+  "email": "ana@email.com",
+  "senha": "123456"
+}
+
+###
+
+### Cadastrar usuário admin
+POST http://localhost:3000/usuarios/cadastro
+Content-Type: application/json
+
+{
+  "nome": "Admin",
+  "email": "admin@email.com",
+  "senha": "123456",
+  "perfil": "admin"
+}
+
+###
+
+### Login cliente
+POST http://localhost:3000/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "ana@email.com",
+  "senha": "123456"
+}
+
+###
+
+### Login admin
+POST http://localhost:3000/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "admin@email.com",
+  "senha": "123456"
+}
+
+###
+
+### Listar profissionais
+GET http://localhost:3000/profissionais
+
+###
+
+### Criar profissional (precisa de token admin)
+POST http://localhost:3000/profissionais
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+{
+  "nome": "Ana Paula",
+  "especialidade": "Cabelo",
+  "telefone": "51999999999"
+}
+
+###
+
+### Buscar profissional por ID
+GET http://localhost:3000/profissionais/1
+
+###
+
+### Atualizar profissional
+PUT http://localhost:3000/profissionais/1
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Ana Paula Silva",
+  "especialidade": "Cabelo e Coloração",
+  "telefone": "51999999999"
+}
+
+###
+
+### Deletar profissional
+DELETE http://localhost:3000/profissionais/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
