@@ -6,6 +6,8 @@ require('./config/database')
 const errorMiddleware = require('./middlewares/errorMiddleware')
 const userRoutes = require('./routes/userRoutes')
 const profissionalRoutes = require('./routes/profissionalRoutes')
+const areaRoutes = require('./routes/areaRoutes')
+const servicoRoutes = require('./routes/servicoRoutes')
 
 app.use(express.json())
 
@@ -15,6 +17,8 @@ app.get('/', (req, res) => {
 
 app.use('/usuarios', userRoutes)
 app.use('/profissionais', profissionalRoutes)
+app.use('/areas', areaRoutes)
+app.use('/servicos', servicoRoutes)
 app.use(errorMiddleware)
 
 const PORT = process.env.PORT || 3000

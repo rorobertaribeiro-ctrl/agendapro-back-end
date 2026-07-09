@@ -84,3 +84,42 @@ Authorization: Bearer SEU_TOKEN_AQUI
 ### Deletar profissional
 DELETE http://localhost:3000/profissionais/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+### Listar áreas
+GET http://localhost:3000/areas
+
+###
+
+### Criar área
+POST http://localhost:3000/areas
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+{
+  "nome": "Cabelo",
+  "descricao": "Serviços de cabelo"
+}
+
+###
+
+### Listar serviços
+GET http://localhost:3000/servicos
+
+###
+
+### Criar serviço
+POST http://localhost:3000/servicos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+{
+  "area_id": 1,
+  "nome": "Corte feminino",
+  "duracao_min": 60,
+  "preco": 80.00
+}
+
+###
+
+### Listar serviços por área
+GET http://localhost:3000/servicos?area_id=1
