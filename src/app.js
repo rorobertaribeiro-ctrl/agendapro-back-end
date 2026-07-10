@@ -9,6 +9,8 @@ const profissionalRoutes = require('./routes/profissionalRoutes')
 const areaRoutes = require('./routes/areaRoutes')
 const servicoRoutes = require('./routes/servicoRoutes')
 const agendamentoRoutes = require('./routes/agendamentoRoutes')
+const horarioRoutes = require('./routes/horarioRoutes')
+const relatorioRoutes = require('./routes/relatorioRoutes')
 
 app.use(express.json())
 
@@ -21,6 +23,8 @@ app.use('/profissionais', profissionalRoutes)
 app.use('/areas', areaRoutes)
 app.use('/servicos', servicoRoutes)
 app.use('/agendamentos', agendamentoRoutes)
+app.use('/profissionais', horarioRoutes)
+app.use('/relatorios', relatorioRoutes)
 app.use(errorMiddleware)
 
 const PORT = process.env.PORT || 3000

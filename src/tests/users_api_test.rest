@@ -159,3 +159,44 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsI
 ### Concluir agendamento (admin)
 PATCH http://localhost:3000/agendamentos/1/concluir
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
+
+
+### Criar horário de trabalho do profissional
+POST http://localhost:3000/profissionais/1/horarios
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "dia_semana": 1,
+  "hora_inicio": "08:00",
+  "hora_fim": "18:00"
+}
+
+###
+
+### Listar horários do profissional
+GET http://localhost:3000/profissionais/1/horarios
+
+###
+
+### Verificar disponibilidade
+GET http://localhost:3000/profissionais/1/disponibilidade?data=2026-07-15&servico_id=1
+
+###
+
+### Criar bloqueio de horário
+POST http://localhost:3000/profissionais/1/bloqueios
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "inicio": "2026-07-16T08:00:00",
+  "fim": "2026-07-16T12:00:00",
+  "motivo": "Consulta médica"
+}
+
+###
+
+### Dashboard relatórios
+GET http://localhost:3000/relatorios/dashboard
+Authorization: Bearer SEU_TOKEN_AQUI
