@@ -71,7 +71,7 @@ GET http://localhost:3000/profissionais/1
 ### Atualizar profissional
 PUT http://localhost:3000/profissionais/1
 Content-Type: application/json
-Authorization: Bearer SEU_TOKEN_AQUI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM3MTk3MDEsImV4cCI6MTc4NDMyNDUwMX0.6AnexAViB6vzTmTy79GWTTsX-zOn_iLLdx9PUz5qqPs
 
 {
   "nome": "Ana Paula Silva",
@@ -161,10 +161,18 @@ PATCH http://localhost:3000/agendamentos/1/concluir
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM1NjE0NTYsImV4cCI6MTc4NDE2NjI1Nn0.2fkK5baa18gnq0WGLozH4WsN8FQMLbqAIu4nM7eFuaw
 
 
-### Criar horário de trabalho do profissional
-POST http://localhost:3000/profissionais/1/horarios
+@baseUrl = http://localhost:3000
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM3MTk3MDEsImV4cCI6MTc4NDMyNDUwMX0.6AnexAViB6vzTmTy79GWTTsX-zOn_iLLdx9PUz5qqPs
+@clienteToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwicGVyZmlsIjoiYWRtaW4iLCJpYXQiOjE3ODM3MTk3MDEsImV4cCI6MTc4NDMyNDUwMX0.6AnexAViB6vzTmTy79GWTTsX-zOn_iLLdx9PUz5qqPs
+
+########################################
+# HORÁRIOS DE TRABALHO
+########################################
+
+### Criar horário de trabalho do profissional (sucesso - admin)
+POST {{baseUrl}}/profissionais/1/horarios
 Content-Type: application/json
-Authorization: Bearer SEU_TOKEN_AQUI
+Authorization: Bearer {{adminToken}}
 
 {
   "dia_semana": 1,
@@ -174,20 +182,91 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ###
 
-### Listar horários do profissional
-GET http://localhost:3000/profissionais/1/horarios
-
-###
-
-### Verificar disponibilidade
-GET http://localhost:3000/profissionais/1/disponibilidade?data=2026-07-15&servico_id=1
-
-###
-
-### Criar bloqueio de horário
-POST http://localhost:3000/profissionais/1/bloqueios
+### Criar horário - segundo dia da semana (para variar disponibilidade nos testes)
+POST {{baseUrl}}/profissionais/1/horarios
 Content-Type: application/json
-Authorization: Bearer SEU_TOKEN_AQUI
+Authorization: Bearer {{adminToken}}
+
+{
+  "dia_semana": 3,
+  "hora_inicio": "09:00",
+  "hora_fim": "17:00"
+}
+
+###
+
+### Criar horário sem token -> esperado 401
+POST {{baseUrl}}/profissionais/1/horarios
+Content-Type: application/json
+
+{
+  "dia_semana": 1,
+  "hora_inicio": "08:00",
+  "hora_fim": "18:00"
+}
+
+###
+
+### Criar horário com token de cliente (não-admin) -> esperado 403
+POST {{baseUrl}}/profissionais/1/horarios
+Content-Type: application/json
+Authorization: Bearer {{clienteToken}}
+
+{
+  "dia_semana": 1,
+  "hora_inicio": "08:00",
+  "hora_fim": "18:00"
+}
+
+###
+
+### Criar horário com campos faltando -> esperado 400
+POST {{baseUrl}}/profissionais/1/horarios
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "dia_semana": 1,
+  "hora_inicio": "08:00"
+}
+
+###
+
+### Listar horários do profissional (rota pública)
+GET {{baseUrl}}/profissionais/1/horarios
+
+###
+
+### Listar horários de profissional sem nenhum horário cadastrado -> esperado []
+GET {{baseUrl}}/profissionais/999/horarios
+
+###
+
+### Deletar horário (sucesso - ajustar :id conforme retorno do POST acima)
+DELETE {{baseUrl}}/profissionais/1/horarios/1
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Deletar horário inexistente -> esperado 404
+DELETE {{baseUrl}}/profissionais/1/horarios/9999
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Deletar horário sem token -> esperado 401
+DELETE {{baseUrl}}/profissionais/1/horarios/1
+
+###
+
+########################################
+# BLOQUEIOS DE HORÁRIO
+########################################
+
+### Criar bloqueio de horário (sucesso - admin)
+POST {{baseUrl}}/profissionais/1/bloqueios
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
 
 {
   "inicio": "2026-07-16T08:00:00",
@@ -197,6 +276,85 @@ Authorization: Bearer SEU_TOKEN_AQUI
 
 ###
 
-### Dashboard relatórios
-GET http://localhost:3000/relatorios/dashboard
-Authorization: Bearer SEU_TOKEN_AQUI
+### Criar bloqueio sem token -> esperado 401
+POST {{baseUrl}}/profissionais/1/bloqueios
+Content-Type: application/json
+
+{
+  "inicio": "2026-07-16T08:00:00",
+  "fim": "2026-07-16T12:00:00",
+  "motivo": "Consulta médica"
+}
+
+###
+
+### Criar bloqueio com campos faltando -> esperado 400
+POST {{baseUrl}}/profissionais/1/bloqueios
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "motivo": "Sem horários definidos"
+}
+
+###
+
+### Listar bloqueios do profissional (rota pública)
+GET {{baseUrl}}/profissionais/1/bloqueios
+
+###
+
+### Deletar bloqueio (sucesso - ajustar :id conforme retorno do POST acima)
+DELETE {{baseUrl}}/profissionais/1/bloqueios/1
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Deletar bloqueio inexistente -> esperado 404
+DELETE {{baseUrl}}/profissionais/1/bloqueios/9999
+Authorization: Bearer {{adminToken}}
+
+###
+
+########################################
+# DISPONIBILIDADE
+########################################
+
+### Verificar disponibilidade (data com horário de trabalho cadastrado)
+GET {{baseUrl}}/profissionais/1/disponibilidade?data=2026-07-15&servico_id=1
+
+###
+
+### Disponibilidade em dia sem horário de trabalho cadastrado -> esperado []
+GET {{baseUrl}}/profissionais/1/disponibilidade?data=2026-07-19&servico_id=1
+
+###
+
+### Disponibilidade com serviço inexistente -> esperado 404
+GET {{baseUrl}}/profissionais/1/disponibilidade?data=2026-07-15&servico_id=9999
+
+###
+
+### Disponibilidade sem informar servico_id -> validar comportamento (400 ou erro tratado)
+GET {{baseUrl}}/profissionais/1/disponibilidade?data=2026-07-15
+
+###
+
+########################################
+# RELATÓRIO / DASHBOARD
+########################################
+
+### Dashboard relatórios (sucesso - admin)
+GET {{baseUrl}}/relatorios/dashboard
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Dashboard sem token -> esperado 401
+GET {{baseUrl}}/relatorios/dashboard
+
+###
+
+### Dashboard com token de cliente (não-admin) -> esperado 403
+GET {{baseUrl}}/relatorios/dashboard
+Authorization: Bearer {{clienteToken}}
